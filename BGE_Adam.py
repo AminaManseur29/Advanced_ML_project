@@ -121,25 +121,25 @@ class BGE_Adam():
 
         return loss
         
-def func(params):
-    x, y = params
-    term1 = torch.sin(x) * torch.cos(y)
-    term2 = 0.1 * (x - 1) ** 2 + 0.2 * (y - 2) ** 2
-    term3 = torch.sin(x + y) - 0.5 * torch.cos(2 * x + y)
-    return term1 + term2 + term3
+# def func(params):
+    # x, y = params
+    # term1 = torch.sin(x) * torch.cos(y)
+    # term2 = 0.1 * (x - 1) ** 2 + 0.2 * (y - 2) ** 2
+    # term3 = torch.sin(x + y) - 0.5 * torch.cos(2 * x + y)
+    # return term1 + term2 + term3
 
-x = torch.tensor([2.0], requires_grad=True)
-y = torch.tensor([2.0], requires_grad=True)
+# x = torch.tensor([2.0], requires_grad=True)
+# y = torch.tensor([2.0], requires_grad=True)
 
-optimizer = BGE_Adam([x, y], lr=0.1)
+# optimizer = BGE_Adam([x, y], lr=0.1)
 
-for step in range(1000):
-    optimizer.zero_grad()    
-    loss = func([x, y])
-    loss.backward()         
-    optimizer.step() 
+# for step in range(1000):
+    # optimizer.zero_grad()    
+    # loss = func([x, y])
+    # loss.backward()         
+    # optimizer.step() 
 
-    if step % 10 == 0:
-        print(f"Step {step}, x = {x.item()}, y = {y.item()}, f(x, y) = {loss.item()}")
+    # if step % 10 == 0:
+        # print(f"Step {step}, x = {x.item()}, y = {y.item()}, f(x, y) = {loss.item()}")
         
-print(f"Optimized x = {x.item()}, y = {y.item()}, minimum value = {func([x, y]).item()}")
+# print(f"Optimized x = {x.item()}, y = {y.item()}, minimum value = {func([x, y]).item()}")

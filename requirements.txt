@@ -1,0 +1,5 @@
+numpy
+tensorflow
+sklearn.model_selection
+sklearn.preprocessing
+kagglehub
