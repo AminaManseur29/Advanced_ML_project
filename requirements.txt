@@ -1,5 +1,14 @@
 numpy
 tensorflow
+sckit-learn
 sklearn.model_selection
 sklearn.preprocessing
 kagglehub
+matplotlib.pyplot
+os
+time
+torch
+torch.nn
+torch.optim
+collections
+tqdm

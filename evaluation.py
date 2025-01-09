@@ -11,7 +11,6 @@ def evaluate(model, X_test, y_test):
         outputs = model(X_test)
         predictions = torch.argmax(outputs, dim=1)
         accuracy = (predictions == y_test).float().mean().item()
-    print(f"Test Accuracy: {accuracy:.4f}")
     return accuracy
 
 def evaluate_model(model, X_test, y_test):
