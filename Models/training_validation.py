@@ -144,6 +144,8 @@ class Trainer:
         val_losses = []
         val_accuracies = []
 
+        grad_norms = []  # Track gradient norms
+
         for epoch in range(self.epochs):
             model.train() # Training mode
             epoch_loss = 0
@@ -185,10 +187,14 @@ class Trainer:
                 val_accuracy = (val_predictions == y_valid).float().mean().item()
                 val_accuracies.append(val_accuracy)
 
+                # Gradient norms
+                total_grad_norm = sum(p.grad.norm().item() for p in model.parameters() if p.grad is not None)
+                grad_norms.append(total_grad_norm)
+
             print(f"Epoch {epoch+1}/{self.epochs}, Train Loss: {train_loss:.4f}, "
                   f"Val Loss: {val_loss:.4f}, Val Accuracy: {val_accuracy:.4f}")
 
-        return train_losses, val_losses, val_accuracies
+        return train_losses, val_losses, val_accuracies, grad_norms
 
     def compare_optimizers(self, X_train, y_train, X_valid, y_valid, hyperparams_results):
         """
@@ -210,7 +216,7 @@ class Trainer:
 
             optimizer = opt_class(model.parameters(), **params)
 
-            train_losses, val_losses, val_accuracies = self.train_and_validate(
+            train_losses, val_losses, val_accuracies, grad_norms = self.train_and_validate(
                 model, optimizer, X_train, y_train, X_valid, y_valid
             )
 
@@ -218,6 +224,7 @@ class Trainer:
                 'train_losses': train_losses,
                 'val_losses': val_losses,
                 'val_accuracies': val_accuracies,
+                'grad_norms': grad_norms
             }
 
         self.plot_results(results)
@@ -227,10 +234,10 @@ class Trainer:
         """
         Plot loss and accuracy curves for each optimizer.
         """
-        plt.figure(figsize=(14, 6))
+        plt.figure(figsize=(18, 6))
 
         # Train Losses
-        plt.subplot(1, 2, 1)
+        plt.subplot(1, 3, 1)
         for name, metrics in results.items():
             plt.plot(metrics['train_losses'], label=name)
         plt.title("Train Losses")
@@ -239,12 +246,21 @@ class Trainer:
         plt.legend()
 
         # Validation Accuracy
-        plt.subplot(1, 2, 2)
+        plt.subplot(1, 3, 2)
         for name, metrics in results.items():
             plt.plot(metrics['val_accuracies'], label=name)
         plt.title("Validation Accuracies")
         plt.xlabel("Epochs")
         plt.ylabel("Accuracy")
+        plt.legend()
+
+        # Gradient Norms
+        plt.subplot(1, 3, 3)
+        for name, metrics in results.items():
+            plt.plot(metrics['grad_norms'], label=name)
+        plt.title("Gradient Norms")
+        plt.xlabel("Epochs")
+        plt.ylabel("Norm")
         plt.legend()
 
         plt.tight_layout()
