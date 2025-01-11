@@ -154,7 +154,7 @@ class Trainer:
 
         return train_losses, val_losses, val_accuracies
 
-    def compare_optimizers(self, X_train, y_train, X_valid, y_valid):
+    def compare_optimizers(self, X_train, y_train, X_valid, y_valid, hyperparams_results):
         """
         Compare les optimiseurs en termes de convergence, stabilité et précision.
 
@@ -166,7 +166,13 @@ class Trainer:
         for name, opt_class in self.optimizers.items():
             print(f"\nRunning {name} optimizer...")
             model = self.model_class(self.input_dim, self.num_classes)
-            optimizer = opt_class(model.parameters(), lr=0.01)
+
+            if name == "BGE_Adam":
+                params = {'lr':0.01}
+            else:
+                params = hyperparams_results[f'{model}_{name}']
+
+            optimizer = opt_class(model.parameters(), **params)
 
             train_losses, val_losses, val_accuracies = self.train_and_validate(
                 model, optimizer, X_train, y_train, X_valid, y_valid

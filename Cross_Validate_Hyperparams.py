@@ -4,12 +4,12 @@ import torch
 import torch.nn as nn
 
 
-def cross_validate_hyperparams(model_class, optimizer_class, X_train, y_train, params, k_folds=5, input_dim, num_classes):
+def cross_validate_hyperparams(model_class, optimizer_class, X_train, y_train, params, input_dim, num_classes, k_folds=5):
     kfold = KFold(n_splits=k_folds, shuffle=True)
     best_loss = float('inf')
     best_params = None
     
-    with tqdm(total=len(params) * k_folds, desc="Recherche des hyperparamètres") as pbar:
+    with tqdm(total=len(params) * k_folds, desc="Search of the hyperparameters") as pbar:
         for param_set in params:
             fold_losses = []
             for train_idx, val_idx in kfold.split(X_train):
@@ -45,11 +45,11 @@ def cross_validate_hyperparams(model_class, optimizer_class, X_train, y_train, p
     return best_params, best_loss
 
 
-def cross_validate_accuracy(model_class, optimizer_class, X_train, y_train, params, k_folds=10, input_dim, num_classes):    
+def cross_validate_accuracy(model_class, optimizer_class, X_train, y_train, params, input_dim, num_classes, k_folds=10):    
     kfold = KFold(n_splits=k_folds, shuffle=True)
     accuracies = []
 
-    with tqdm(total=k_folds, desc="Validation croisée") as pbar:
+    with tqdm(total=k_folds, desc="Cross validation") as pbar:
         for train_idx, val_idx in kfold.split(X_train):
             X_train_fold, y_train_fold = X_train[train_idx], y_train[train_idx]
             X_val_fold, y_val_fold = X_train[val_idx], y_train[val_idx]
