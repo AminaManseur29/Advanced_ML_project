@@ -2,8 +2,7 @@ import time
 import torch
 import matplotlib.pyplot as plt
 import torch.optim as optim
-from Models.models import LogisticRegression, SimpleNN, ComplexNN
-from Models.BGE_Adam import BGE_Adam
+from ..Models.BGE_Adam import BGE_Adam
 import numpy as np
 
 # Util 1 : comparison of optimizers for loss convergence, stability, gradient norms and parameter updates
