@@ -2,6 +2,20 @@
 
 This GitHub repository contains the source code for the final project of the **Advanced Machine Learning** course taught by Austin Stromme during the 1st Semester of the thrid year at ENSAE Paris.
 
+## Project overview 
+
+Our project explores BGE-Adam, an advanced variant of the Adam optimizer designed to improve adaptability, convergence speed, and robustness in dynamic applications, such as medical image analysis and financial time series forecasting. BGE-Adam incorporates algorithmic innovations to enhance model training under diverse, high-dimensional data conditions, making it particularly valuable in fields with high data variability and complexity.
+
+## Objectives 
+1. Understanding BGE-Adam: Provide a comprehensive introduction to BGE-Adam, highlighting key innovations that enhance adaptability, convergence speed, and robustness. This section will cover the algorithm’s structure and unique features that differentiate it from the standard Adam optimizer.
+
+2. Implementation : 
+- MNIST dataset: Implement and evaluate BGE-Adam by training models (Logistic Regression, Simple Neural Network, and Complex Neural Network) on the MNIST dataset. The objective is to achieve accurate classification of handwritten digits, providing a controlled environment to assess the performance improvements over existing optimizers (BGE-Adam, Adam, and SGD).
+
+3. Comparison and analysis: 
+- Performance evaluation: Benchmark BGE-Adam’s performance against Adam and SGD across various models and hyperparameter configurations. Focus will be placed on improvements in accuracy, stability, and adaptability, especially under variable and challenging training conditions.
+- Model complexity and optimization: Examine how BGE-Adam handles different model complexities and how it compares in terms of convergence speed and robustness, particularly on high-dimensional data.
+
 ## Contents
 
 ### Folders
