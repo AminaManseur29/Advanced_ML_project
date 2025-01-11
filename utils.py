@@ -2,7 +2,7 @@ import time
 import torch
 import matplotlib.pyplot as plt
 import torch.optim as optim
-from models import LogisticRegressionTorch, SimpleNN, ComplexNN
+from models import LogisticRegression, SimpleNN, ComplexNN
 from BGE_Adam import BGE_Adam
 import numpy as np
 
@@ -119,3 +119,24 @@ def compare_optimizers(model_class, input_dim, num_classes, X_train, y_train, X_
 
     plt.tight_layout()
     plt.show()
+
+# Util 2 : comparison of the gradient norms of different optimizers
+def track_gradient_norms(model_class, optimizer_class, X_train, y_train,input_dim, num_classes, **kwargs):
+    model = model_class(input_dim, num_classes)
+    optimizer = optimizer_class(model.parameters(), **kwargs)
+    criterion = torch.nn.CrossEntropyLoss()
+
+    grad_norms = []
+    for epoch in range(120):
+        optimizer.zero_grad()
+        outputs = model(X_train)
+        loss = criterion(outputs, y_train)
+        loss.backward()
+
+        # Calculer et enregistrer la norme des gradients
+        total_grad_norm = sum(p.grad.norm().item() for p in model.parameters() if p.grad is not None)
+        grad_norms.append(total_grad_norm)
+
+        optimizer.step()
+    
+    return grad_norms

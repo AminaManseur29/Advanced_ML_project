@@ -5,9 +5,9 @@ import torch.optim as optim
 import numpy as np
 
 # Definition of the logistic regression class
-class LogisticRegressionTorch(nn.Module):
+class LogisticRegression(nn.Module):
     def __init__(self, input_dim, num_classes):
-        super(LogisticRegressionTorch, self).__init__()
+        super(LogisticRegression, self).__init__()
         self.linear = nn.Linear(input_dim, num_classes)
     
     def forward(self, x):

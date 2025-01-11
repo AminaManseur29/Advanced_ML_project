@@ -2,49 +2,81 @@ import torch
 import matplotlib.pyplot as plt
 import numpy as np
 
+# Definition of the training function
+def train(model, optimizer, criterion, X_train, y_train, epochs=20, batch_size=64):
+    num_samples = X_train.shape[0]
+    model.train()
+    
+    for epoch in range(epochs):
+        epoch_loss = 0
+        
+        # Mixing data
+        perm = torch.randperm(num_samples)
+        X_train = X_train[perm]
+        y_train = y_train[perm]
+        
+        for i in range(0, num_samples, batch_size):
+            X_batch = X_train[i:i+batch_size]
+            y_batch = y_train[i:i+batch_size]
+            
+            # Reset gradients
+            optimizer.zero_grad()
+            
+            # Front and backward passages
+            outputs = model(X_batch)
+            loss = criterion(outputs, y_batch)
+            loss.backward()
+            optimizer.step()
+            
+            epoch_loss += loss.item()
+        
+        print(f"Epoch {epoch+1}/{epochs}, Loss: {epoch_loss / (num_samples // batch_size):.4f}")
 
+
+# Definition of the training and validation function
 def training_validation(model, optimizer, criterion, X_train, y_train, X_valid, y_valid, 
                         epochs=20, batch_size=64):
     """
-    Entraîne et valide un modèle PyTorch sans utiliser de DataLoader.
+    Train and validate a PyTorch model without using a DataLoader.
 
     Parameters:
-    - model: Le modèle PyTorch à entraîner.
-    - optimizer: L'optimiseur (par exemple, BGE_Adam).
-    - criterion: La fonction de perte (par exemple, CrossEntropyLoss).
-    - X_train, y_train: Données et étiquettes pour l'entraînement (PyTorch tensors).
-    - X_valid, y_valid: Données et étiquettes pour la validation (PyTorch tensors).
-    - epochs: Nombre d'époques d'entraînement.
-    - batch_size: Taille des mini-lots.
+    - model: The PyTorch model to be trained.
+    - optimizer: The optimizer (e.g., BGE_Adam).
+    - criterion: The loss function (e.g., CrossEntropyLoss).
+    - X_train, y_train: Training data and labels (PyTorch tensors).
+    - X_valid, y_valid: Validation data and labels (PyTorch tensors).
+    - epochs: Number of training epochs.
+    - batch_size: Batch size.
 
     Returns:
-    - train_losses: Liste des pertes d'entraînement pour chaque époque.
-    - val_losses: Liste des pertes de validation pour chaque époque.
-    - val_accuracies: Liste des précisions de validation pour chaque époque.
-    """
+    - train_losses: List of training losses for each epoch.
+    - val_losses: List of validation losses for each epoch.
+    - val_accuracies: List of validation accuracies for each epoch.
+    """    
+
     num_samples = X_train.shape[0]
     train_losses = []
     val_losses = []
     val_accuracies = []
 
     for epoch in range(epochs):
-        model.train()  # Passer en mode entraînement
+        model.train()  # Training mode
         epoch_loss = 0
         
-        # Mélanger les données d'entraînement
+        # Shuffle training data
         perm = torch.randperm(num_samples)
         X_train = X_train[perm]
         y_train = y_train[perm]
 
-        # Diviser les données en mini-lots
+        # Divide the training data into mini-batches
         for i in range(0, num_samples, batch_size):
             X_batch = X_train[i:i+batch_size]
             y_batch = y_train[i:i+batch_size]
 
-            # Réinitialiser les gradients
+            # Reset gradients
             optimizer.zero_grad()
 
-            # Passages avant et arrière
+            # Forward and backward
             outputs = model(X_batch)
             loss = criterion(outputs, y_batch)
             loss.backward()
@@ -52,42 +84,45 @@ def training_validation(model, optimizer, criterion, X_train, y_train, X_valid, 
 
             epoch_loss += loss.item()
 
-        # Calcul de la perte moyenne pour l'époque
+        # Calculate the average loss for the epoch
         train_loss = epoch_loss / (num_samples // batch_size)
         train_losses.append(train_loss)
 
         # Validation
-        model.eval()  # Passer en mode évaluation
+        model.eval()  # Evaluation mode
         with torch.no_grad():
             val_outputs = model(X_valid)
             val_loss = criterion(val_outputs, y_valid).item()
             val_losses.append(val_loss)
 
-            # Calcul de la précision
+            # Calculate accuracy
             val_predictions = torch.argmax(val_outputs, dim=1)
             val_accuracy = (val_predictions == y_valid).float().mean().item()
             val_accuracies.append(val_accuracy)
 
-        # Affichage des résultats pour l'époque
+        # Print epoch results
         print(f"Epoch {epoch+1}/{epochs}, Train Loss: {train_loss:.4f}, "
               f"Val Loss: {val_loss:.4f}, Val Accuracy: {val_accuracy:.4f}")
 
     return train_losses, val_losses, val_accuracies
 
+
+# Definition of the Trainer class
 class Trainer:
     def __init__(self, model_class, input_dim, num_classes, criterion, optimizers, epochs=20, batch_size=64):
         """
-        Initialise la classe Trainer.
+    Initialize the Trainer class.
 
-        Parameters:
-        - model_class: La classe du modèle (ex. LogisticRegressionTorch, SimpleNN, etc.).
-        - input_dim: Dimension des entrées.
-        - num_classes: Nombre de classes de sortie.
-        - criterion: La fonction de perte.
-        - optimizers: Dictionnaire des optimiseurs à comparer (nom -> classe).
-        - epochs: Nombre d'époques d'entraînement.
-        - batch_size: Taille des mini-lots.
-        """
+    Parameters:
+    - model_class: The model class (e.g., LogisticRegressionTorch, SimpleNN, etc.).
+    - input_dim: Dimension of the input data.
+    - num_classes: Number of output classes.
+    - criterion: The loss function.
+    - optimizers: Dictionary of optimizers to compare (name -> class).
+    - epochs: Number of training epochs.
+    - batch_size: Batch size.
+    """
+
         self.model_class = model_class
         self.input_dim = input_dim
         self.num_classes = num_classes
@@ -98,31 +133,32 @@ class Trainer:
 
     def train_and_validate(self, model, optimizer, X_train, y_train, X_valid, y_valid):
         """
-        Entraîne et valide un modèle.
+    Train and validate a model.
 
-        Returns:
-        - train_losses, val_losses, val_accuracies: Listes des métriques d'entraînement et de validation.
-        """
+    Returns:
+    - train_losses, val_losses, val_accuracies: Lists of training and validation metrics.
+    """
+        
         num_samples = X_train.shape[0]
         train_losses = []
         val_losses = []
         val_accuracies = []
 
         for epoch in range(self.epochs):
-            model.train() # Mode entraînement
+            model.train() # Training mode
             epoch_loss = 0
 
-            # Mélange aléatoire des données
+            # Shuffle training data
             perm = torch.randperm(num_samples)
             X_train = X_train[perm]
             y_train = y_train[perm]
 
-            # Entraînement par mini-lots
+            # Training by mini-batches
             for i in range(0, num_samples, self.batch_size):
                 X_batch = X_train[i:i+self.batch_size]
                 y_batch = y_train[i:i+self.batch_size]
 
-                # Réinitialisation des gradients
+                # Reset gradients
                 optimizer.zero_grad()
 
                 # Forward and backward
@@ -133,18 +169,18 @@ class Trainer:
 
                 epoch_loss += loss.item()
 
-            # Calcul de la perte moyenne pour l'époque
+            # Average loss for the epoch
             train_loss = epoch_loss / (num_samples // self.batch_size)
             train_losses.append(train_loss)
 
             # Validation
-            model.eval()    # Mode évaluation
+            model.eval()    # Evaluation mode
             with torch.no_grad():
                 val_outputs = model(X_valid)
                 val_loss = self.criterion(val_outputs, y_valid).item()
                 val_losses.append(val_loss)
 
-                # Calcul de la précision
+                # Accuracy
                 val_predictions = torch.argmax(val_outputs, dim=1)
                 val_accuracy = (val_predictions == y_valid).float().mean().item()
                 val_accuracies.append(val_accuracy)
@@ -156,10 +192,10 @@ class Trainer:
 
     def compare_optimizers(self, X_train, y_train, X_valid, y_valid, hyperparams_results):
         """
-        Compare les optimiseurs en termes de convergence, stabilité et précision.
+        Compare optimizers in terms of convergence, stability, and accuracy.
 
         Returns:
-        - results: Dictionnaire contenant les métriques de chaque optimiseur.
+        - results: Dictionary containing metrics for each optimizer.
         """
         results = {}
 
@@ -189,7 +225,7 @@ class Trainer:
 
     def plot_results(self, results):
         """
-        Trace les courbes des pertes et précisions pour chaque optimiseur.
+        Plot loss and accuracy curves for each optimizer.
         """
         plt.figure(figsize=(14, 6))
 
