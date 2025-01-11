@@ -7,22 +7,18 @@ This GitHub repository contains the source code for the final project of the **A
 Our project explores BGE-Adam, an advanced variant of the Adam optimizer designed to improve adaptability, convergence speed, and robustness in dynamic applications, such as medical image analysis and financial time series forecasting. BGE-Adam incorporates algorithmic innovations to enhance model training under diverse, high-dimensional data conditions, making it particularly valuable in fields with high data variability and complexity.
 
 ## Objectives 
-1. Understanding BGE-Adam: Provide a comprehensive introduction to BGE-Adam, highlighting key innovations that enhance adaptability, convergence speed, and robustness. This section will cover the algorithm’s structure and unique features that differentiate it from the standard Adam optimizer.
+1. **Understanding BGE-Adam**: Provide a comprehensive introduction to BGE-Adam, highlighting key innovations that enhance adaptability, convergence speed, and robustness. This section will cover the algorithm’s structure and unique features that differentiate it from the standard Adam optimizer.
 
-2. Implementation : 
+2. **Implementation** : 
 - MNIST dataset: Implement and evaluate BGE-Adam by training models (Logistic Regression, Simple Neural Network, and Complex Neural Network) on the MNIST dataset. The objective is to achieve accurate classification of handwritten digits, providing a controlled environment to assess the performance improvements over existing optimizers (BGE-Adam, Adam, and SGD).
 
-3. Comparison and analysis: 
+3. **Comparison and analysis**: 
 - Performance evaluation: Benchmark BGE-Adam’s performance against Adam and SGD across various models and hyperparameter configurations. Focus will be placed on improvements in accuracy, stability, and adaptability, especially under variable and challenging training conditions.
 - Model complexity and optimization: Examine how BGE-Adam handles different model complexities and how it compares in terms of convergence speed and robustness, particularly on high-dimensional data.
 
 ## Contents
 
 ### Folders
-
-- **/Experiments**: This folder contains two Jupyter Notebooks:
-  - `Empirical_experiments.ipynb`: This notebook presents empirical experiments conducted, illustrating different hyperparameter validation methods and model training approaches. It demonstrates how to reproduce the empirical results obtained, with sections on data preparation, K-Fold Cross Validation, and training with optimal hyperparameters.
-  - `Theoretical_experiments.ipynb`: This notebook documents theoretical experiments, where we seek to minimize various functions by exploring different optimization configurations using algorithms such as BGE_Adam.
 
 - **/Models**: This folder contains modules related to models and optimization:
   - `BGE_Adam.py`: Implementation of the BGE_Adam optimizer.
@@ -34,9 +30,14 @@ Our project explores BGE-Adam, an advanced variant of the Adam optimizer designe
   - `Cross_Validate_Hyperparams.py`: Hyperparameter cross-validation to optimize model performance.
   - `utils.py` : 
 
+
+- **`Empirical_experiments.ipynb`**: This notebook presents empirical experiments conducted, illustrating different hyperparameter validation methods and model training approaches. It demonstrates how to reproduce the empirical results obtained, with sections on data preparation, K-Fold Cross Validation, and training with optimal hyperparameters.
+
+- **`Theoretical_experiments.ipynb`**: This notebook documents theoretical experiments, where we seek to minimize various functions by exploring different optimization configurations using algorithms such as BGE_Adam.
+
 - **README.md**: This file.
 
-- **requirements.txt**: List of dependencies required for the project.
+- **`requirements.txt`**: List of dependencies required for the project.
 
 ## Setup Instructions
 

@@ -191,8 +191,10 @@ class Trainer:
                 total_grad_norm = sum(p.grad.norm().item() for p in model.parameters() if p.grad is not None)
                 grad_norms.append(total_grad_norm)
 
-            print(f"Epoch {epoch+1}/{self.epochs}, Train Loss: {train_loss:.4f}, "
-                  f"Val Loss: {val_loss:.4f}, Val Accuracy: {val_accuracy:.4f}")
+            # Print results every epochs/10
+            if (epoch + 1) % (self.epochs // 10) == 0 or epoch == self.epochs - 1:
+                print(f"Epoch {epoch+1}/{self.epochs}, Train Loss: {train_loss:.4f}, "
+                    f"Val Loss: {val_loss:.4f}, Val Accuracy: {val_accuracy:.4f}")
 
         return train_losses, val_losses, val_accuracies, grad_norms
 
@@ -212,7 +214,7 @@ class Trainer:
             if name == "BGE_Adam":
                 params = {'lr':0.01}
             else:
-                params = hyperparams_results[f'{model}_{name}']
+                params = hyperparams_results[f'{self.model_class.__name__}_{name}']
 
             optimizer = opt_class(model.parameters(), **params)
 
