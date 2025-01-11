@@ -30,11 +30,11 @@ From the command line, follow these steps to set up this project:
 
 1. Clone this repository:
 ```bash
-   git clone https://github.com/YourUsername/YourProject.git
+   git clone https://github.com/AminaManseur29/Advanced_ML_project.git
 ```
 2. Navigate to the project folder:
 ```bash
-cd YourProject
+cd Advanced_ML_project
 ```
 3. Install the listed dependencies:
 ```bash
