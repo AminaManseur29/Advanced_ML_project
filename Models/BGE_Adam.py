@@ -25,7 +25,7 @@ def compute_dynamic_beta(change_rate, min_val, max_val):
     return min(max(beta, min_val), max_val)
 
 class BGE_Adam():
-    def __init__(self, params, lr=0.001, alpha=0.5, betas=(0.9, 0.999), eps=1e-8, weight_decay=0,
+    def __init__(self, params, lr=0.1, alpha=0.5, betas=(0.9, 0.999), eps=1e-8, weight_decay=0,
                  entropy_weight=0.01, amsgrad=False, beta1_max=0.9, beta1_min=0.5, beta2_max=0.999,
                  beta2_min=0.9):
         self.defaults = dict(lr=lr, alpha=alpha, betas=betas, eps=eps, weight_decay=weight_decay,
