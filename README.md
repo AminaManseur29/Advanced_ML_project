@@ -21,14 +21,14 @@ Our project explores BGE-Adam, an advanced variant of the Adam optimizer designe
 ### Folders
 
 - **/Algorithms**: This folder contains :
-- `adam.py` :
-- `fichier.txt` :
-- `optimize.py` :
-- `test_functions.py`:
+  - `adam.py` :
+  - `fichier.txt` :
+  - `optimize.py` :
+  - `test_functions.py`:
 
 - **/Algorithms_tests**:
-- `main Theoretical Experiments.ipynb` : 
-- `Additional Theoretical Experiments.ipynb` :
+  - `main Theoretical Experiments.ipynb` : 
+  - `Additional Theoretical Experiments.ipynb` :
   
 - **/Models**: This folder contains modules related to models and optimization:
   - `BGE_Adam.py`: Implementation of the BGE_Adam optimizer.
