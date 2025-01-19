@@ -20,6 +20,16 @@ Our project explores BGE-Adam, an advanced variant of the Adam optimizer designe
 
 ### Folders
 
+- **/Algorithms**: This folder contains :
+- `adam.py` :
+- `fichier.txt` :
+- `optimize.py` :
+- `test_functions.py`:
+
+- **/Algorithms_tests**:
+- `main Theoretical Experiments.ipynb` : 
+- `Additional Theoretical Experiments.ipynb` :
+  
 - **/Models**: This folder contains modules related to models and optimization:
   - `BGE_Adam.py`: Implementation of the BGE_Adam optimizer.
   - `evaluation.py`: Functions for evaluating models (accuracy, loss, etc.).
@@ -28,11 +38,8 @@ Our project explores BGE-Adam, an advanced variant of the Adam optimizer designe
 
 - **/Utils**: This folder contains utility tools:
   - `Cross_Validate_Hyperparams.py`: Hyperparameter cross-validation to optimize model performance.
-
-- **Theoretical_Experiments.ipynb`** : This notebook presents empirical experiments on the Sentic dataset, where we implemented Adam variants (BGE-RMSPro, AdaGrad, and Adaptive Adam) and tested the performance of BGE-Adam using some classic test functions.
+  
 - **`Empirical_experiments.ipynb`**: This notebook presents empirical experiments conducted, illustrating different hyperparameter validation methods and model training approaches. It demonstrates how to reproduce the empirical results obtained, with sections on data preparation, K-Fold Cross Validation, and training with optimal hyperparameters.
-
-- **`Theoretical_experiments.ipynb`**: This notebook documents theoretical experiments, where we seek to minimize various functions by exploring different optimization configurations using algorithms such as BGE_Adam.
 
 - **README.md**: This file.
 
