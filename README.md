@@ -8,8 +8,8 @@ Our project explores BGE-Adam, an advanced variant of the Adam optimizer designe
 
 ## Objectives 
 1. **Understanding BGE-Adam**: Provide a comprehensive introduction to BGE-Adam, highlighting key innovations that enhance adaptability, convergence speed, and robustness. This section will cover the algorithm’s structure and unique features that differentiate it from the standard Adam optimizer.
-
-2. **Implementation** : 
+2. **Implementation** :
+-We tested the performance of BGE-Adam with different Adam variants (BGE-RMSPro, AdaGrad, and Adaptive Adam) using classic test functions that represent various optimization problems. These include well-conditioned and poorly-conditioned quadratic functions, non-convex functions, and functions with local minima, evaluating BGE-Adam's robustness, efficiency, convergence speed, and stability compared to standard optimizers.
 - MNIST dataset: Implement and evaluate BGE-Adam by training models (Logistic Regression, Simple Neural Network, and Complex Neural Network) on the MNIST dataset. The objective is to achieve accurate classification of handwritten digits, providing a controlled environment to assess the performance improvements over existing optimizers (BGE-Adam, Adam, and SGD).
 
 3. **Comparison and analysis**: 
@@ -30,7 +30,7 @@ Our project explores BGE-Adam, an advanced variant of the Adam optimizer designe
   - `Cross_Validate_Hyperparams.py`: Hyperparameter cross-validation to optimize model performance.
   - `utils.py` : 
 
-
+- **Theoretical_Experiments.ipynb`** : This notebook presents empirical experiments on the Sentic dataset, where we implemented Adam variants (BGE-RMSPro, AdaGrad, and Adaptive Adam) and tested the performance of BGE-Adam using some classic test functions.
 - **`Empirical_experiments.ipynb`**: This notebook presents empirical experiments conducted, illustrating different hyperparameter validation methods and model training approaches. It demonstrates how to reproduce the empirical results obtained, with sections on data preparation, K-Fold Cross Validation, and training with optimal hyperparameters.
 
 - **`Theoretical_experiments.ipynb`**: This notebook documents theoretical experiments, where we seek to minimize various functions by exploring different optimization configurations using algorithms such as BGE_Adam.
